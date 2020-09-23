@@ -128,6 +128,18 @@ function Movie(props){
     addVisitedMovie(urlId)
     },[movie.id]);
 
+
+    useEffect(()=>{
+    api.get(link).then((data)=>{
+        console.log(data)
+    })
+      /* .then(({ code, status, ...apiData }) => {
+        console.log('dededed')
+            console.log(code)
+            console.log(status)
+       });*/
+    },[urlId]);
+
 	return (
 	(typeof movie.titel !== undefined) ?
 		<>

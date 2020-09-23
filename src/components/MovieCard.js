@@ -4,6 +4,8 @@ import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import {Link} from "react-router-dom"
 
+import getScoreColor from '../utils/scoreColor'
+
 const useStyles = makeStyles(theme => ({
 	root: {
 		position: 'relative',
@@ -63,8 +65,11 @@ const useStyles = makeStyles(theme => ({
 
 
 function MovieCard(props){
-	const { titel, img, info, src, vote } = props;
+
 	const classes = useStyles();
+	const { titel, img, info, src, vote } = props;
+	const scoreColor = getScoreColor(vote);
+
 	return(
 		<Link className={classes.root} to={"/movie/"+src}>
 			<div className={classes.posterBox}>
@@ -74,8 +79,8 @@ function MovieCard(props){
 				<h4 className={classes.titel}>{titel}</h4>
 				{/*
 				<p className={classes.info}></p>
-				<span className={classes.vote}>{vote}</span>
 				*/}
+				<span className={classes.vote} style={{background: scoreColor}}>{vote}</span>
 			</div>
 		</Link>
 	)

@@ -111,8 +111,8 @@ return(
               <MovieCard key={i} titel={movie.title} 
                     img={movie.poster_path} 
                     src={movie.id}
-                    info={5} 
-                    vote={6}
+                    info={null} 
+                    vote={movie.vote_average}
               />
             </Grid>
           )
