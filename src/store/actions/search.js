@@ -1,7 +1,6 @@
-//import * as api from '../middlewares/imdb-api.js';
 
 import * as api from '../../utils/imdb-api.js'
-//import { deleteEmpty } as api from '../../utils'
+import { prepareMovies, deleteEmptyMovies } from '../../utils'
 
 import { SEARCH_MOVIES_REQUEST,
  		 SEARCH_MOVIES_SUCCESS,
@@ -30,7 +29,7 @@ export const searchMovieFail = (error) => {
 export const searchMovieSuccess = data => {
   return {
     type: SEARCH_MOVIES_SUCCESS,
-    payload: data.data.results
+    payload: prepareMovies(deleteEmptyMovies(data.data.results))
   };
 };
 

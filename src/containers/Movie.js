@@ -10,7 +10,7 @@ import * as api from '../utils/imdb-api.js';
 import {makeStyles} from "@material-ui/core/styles"
 import MovieCard from '../components/MovieCard'
 
-import { prepareMovie, prepareMovies, windowScrollTop } from '../utils'
+import { prepareMovie, prepareMovies, deleteEmptyMovies, windowScrollTop } from '../utils'
 import { addVisitedMovie } from '../store/actions/user'
 
 const useStyles = makeStyles(theme => ({

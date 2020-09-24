@@ -31,5 +31,7 @@ export const prepareMovies = (movies) => {
 }
 
 export const deleteEmptyMovies = (movies) => {
-	return movies
+    return movies.filter(movie => {
+        return !!movie.title && !!movie.poster_path && movie.popularity > 0.25
+    })
 }

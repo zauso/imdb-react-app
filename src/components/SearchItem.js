@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
 import Typography from "@material-ui/core/Typography" 
+import getScoreColor from "../utils/scoreColor"
 import {Link} from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
@@ -17,15 +18,13 @@ const useStyles = makeStyles(theme => ({
 
 function SearchItem(props){
 	const classes = useStyles();
-	let { a } = props;
-	let poster = "https://image.tmdb.org/t/p/w154"+a.poster_path
-	let movieLink = "/movie/"+a.id;
+	let { movie } = props;
 	return(
-		<ListItem button component={Link} to={movieLink} className={classes.listItem}>
-			{a.poster_path && <img className={classes.itemImage} src={poster} alt={a.title}/>}
-			<Typography variant="p">{a.title}</Typography>
-			{a.vote_average ?
-				<span style={{position: 'absolute', right: '10px'}}>{a.vote_average}</span>
+		<ListItem button component={Link} to={`/movie/${movie.id}`} className={classes.listItem}>
+			<img className={classes.itemImage} src={movie.posterImageUrl} alt={movie.title}/>
+			<Typography variant="p">{movie.title}</Typography>
+			{movie.voteAverage ?
+				<span style={{position: 'absolute', right: '10px', color: getScoreColor(movie.voteAverage)}}>{movie.voteAverage}</span>
 			:
 				<span style={{position: 'absolute', right: '10px'}}>-</span>
 			}

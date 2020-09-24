@@ -147,7 +147,7 @@ const classes = useStyles();
 
 const mapStateToProps = (state) => {
   return {
-    foundMovies: state.searchMovies
+    foundMovies: state.searchMovies.foundMovies
   }
 }
 const mapDispatchToProps = dispatch => ({

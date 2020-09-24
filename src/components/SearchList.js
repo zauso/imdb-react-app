@@ -23,8 +23,8 @@ export default function SearchResults(props){
 	const { foundMovies } = props;
 	return (<List className={classes.list}>
     		{
-    			foundMovies.foundMovies.length ?
-	    			foundMovies.foundMovies.map( a => <SearchItem a={a}/> )
+    			foundMovies.length ?
+	    			foundMovies.map( movie => <SearchItem movie={movie}/> )
 	    		:
 	    			<h3>No results</h3>
     		}
