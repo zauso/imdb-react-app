@@ -28,8 +28,6 @@ export const searchMovieFail = (error) => {
 };
 
 export const searchMovieSuccess = data => {
-	//console.log(data.data.results)
-	//console.log(deleteEmpty(data.data.results))
   return {
     type: SEARCH_MOVIES_SUCCESS,
     payload: data.data.results

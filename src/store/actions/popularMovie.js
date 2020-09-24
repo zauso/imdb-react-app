@@ -1,4 +1,5 @@
 import * as api from '../middlewares/imdb-api.js';
+import { prepareMovies } from '../../utils'
 
 import { POPULAR_MOVIES_FETCH_REQUEST,
  		 POPULAR_MOVIES_FETCH_SUCCESS,
@@ -21,7 +22,7 @@ export const fetchPopularSuccess = result => {
   return {
     type: POPULAR_MOVIES_FETCH_SUCCESS,
     payload: {
-    	movies: result.data.results,
+    	movies: prepareMovies(result.data.results),
     	page: result.data.page
     }
   };

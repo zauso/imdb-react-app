@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#e8e8e8',
         transition: 'all 0.15s ease-in-out'
 	},
-	titel: {
+	title: {
 		fontSize: '24px',
 		color: '#000',
 		textDecoration: 'none',
@@ -67,19 +67,17 @@ const useStyles = makeStyles(theme => ({
 function MovieCard(props){
 
 	const classes = useStyles();
-	const { titel, img, info, src, vote } = props;
+	const { id, title, imgUrl, info, vote } = props;
 	const scoreColor = getScoreColor(vote);
 
 	return(
-		<Link className={classes.root} to={"/movie/"+src}>
+		<Link className={classes.root} to={`/movie/${id}`}>
 			<div className={classes.posterBox}>
-				<img className={classes.movieImage} src={"https://image.tmdb.org/t/p/w500"+img} alt="ddd"/>
+				<img className={classes.movieImage} src={imgUrl} alt={title}/>
 			</div>
 			<div className={classes.movieDetails}>
-				<h4 className={classes.titel}>{titel}</h4>
-				{/*
-				<p className={classes.info}></p>
-				*/}
+				<h4 className={classes.title}>{title}</h4>
+				<p className={classes.info}>{info}</p>
 				<span className={classes.vote} style={{background: scoreColor}}>{vote}</span>
 			</div>
 		</Link>

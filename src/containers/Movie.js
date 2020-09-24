@@ -10,31 +10,8 @@ import * as api from '../utils/imdb-api.js';
 import {makeStyles} from "@material-ui/core/styles"
 import MovieCard from '../components/MovieCard'
 
+import { prepareMovie, prepareMovies, windowScrollTop } from '../utils'
 import { addVisitedMovie } from '../store/actions/user'
-
-function prepareImage(url, size = 'w500') {
-    // size = 'original'
-    if (!url) return null
-    return `https://image.tmdb.org/t/p/${size}${url}`
-}
-
-function prepareMovie(raw) {
-    const basicData = {
-        id: raw.id,
-        title: raw.title,
-        overview: raw.overview,
-        genres: raw.genres ? raw.genres.map(i => i.name) : null,
-        voteAverage: raw.vote_average,
-        legend: raw.tagline,
-        releaseDate: raw.release_date,
-        posterImageUrl: prepareImage(raw.poster_path),
-        backdropImageUrl: prepareImage(raw.backdrop_path),
-        popularity: raw.popularity
-    }
-    
-
-    return basicData;
-}
 
 const useStyles = makeStyles(theme => ({
     movieContainer: {
@@ -99,46 +76,29 @@ const useStyles = makeStyles(theme => ({
     }));
 
 function Movie(props){
+
     const { addVisitedMovie } = props;
 	const classes = useStyles();
     const {id: urlId} = useParams()
 	const [movie, setMovie] = useState([]);
     const [recommendMovies, setRecommendMovies] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
-	const link = '/movie/'+urlId;
-    const link2 = link+"/similar";
-    const link3 = link+"/recommendations"
 
 	useEffect(()=>{
-        //if()
-	api.get(link).then((result) => {
-			console.log(result.data);
+	   api.get(`/movie/${urlId}`).then((result) => {
 			setMovie(prepareMovie(result.data));
 		})
-	},[urlId]);
-    useEffect(()=>{
-        api.get(link2).then((result) => {
-            setSimilarMovies(result.data.results.slice(0, 6))
+       api.get(`/movie/${urlId}/similar`).then((result) => {
+            setSimilarMovies(prepareMovies(result.data.results.slice(0, 6)))
         })
-    },[urlId]);
-    useEffect(()=>{
-        api.get(link3).then((result) => {
-            setRecommendMovies(result.data.results.slice(0, 6))
-    })
-    addVisitedMovie(urlId)
-    },[movie.id]);
+        api.get(`/movie/${urlId}/recommendations`).then((result) => {
+            setRecommendMovies(prepareMovies(result.data.results.slice(0, 6)))
+        })
 
+        windowScrollTop()
+        addVisitedMovie(urlId)
 
-    useEffect(()=>{
-    api.get(link).then((data)=>{
-        console.log(data)
-    })
-      /* .then(({ code, status, ...apiData }) => {
-        console.log('dededed')
-            console.log(code)
-            console.log(status)
-       });*/
-    },[urlId]);
+	},[urlId]);
 
 	return (
 	(typeof movie.titel !== undefined) ?
@@ -157,7 +117,7 @@ function Movie(props){
 	      			</Grid>
 	      			<Grid item md={9} style={{color: '#fff'}}>
                         <Typography variant={"h4"} style={{fontWeight: 'bold'}} component={"h1"}>
-                            {movie.title} <span style={{fontWeight: 300, fontSize: '28px'}}>({new Date(movie.releaseDate).getFullYear()})</span>
+                            {movie.title} <span style={{fontWeight: 300, fontSize: '28px'}}>({movie.releaseYear})</span>
                         </Typography>
                         <ul className={classes.genreList}>
                             {movie.genres ? 
@@ -196,11 +156,12 @@ function Movie(props){
                     {
                         recommendMovies.map((movie, i)=>{
                             return (<Grid item md={2}>
-                                        <MovieCard key={i} titel={movie.title} 
-                                                img={movie.poster_path} 
-                                                src={movie.id}
-                                                info={5} 
-                                                vote={6}
+                                        <MovieCard 
+                                            key={i} 
+                                            title={movie.title} 
+                                            imgUrl={movie.posterImageUrl} 
+                                            id={movie.id}
+                                            vote={movie.voteAverage}
                                         />
                                     </Grid>
                             )
@@ -212,11 +173,12 @@ function Movie(props){
                     {
                         similarMovies.map((movie, i)=>{
                             return (<Grid item md={2}>
-                                        <MovieCard key={i} titel={movie.title} 
-                                                img={movie.poster_path} 
-                                                src={movie.id}
-                                                info={5} 
-                                                vote={6}
+                                        <MovieCard
+                                            key={i} 
+                                            title={movie.title} 
+                                            imgUrl={movie.posterImageUrl} 
+                                            id={movie.id}
+                                            vote={movie.voteAverage}
                                         />
                                     </Grid>
                             )

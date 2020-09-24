@@ -108,11 +108,13 @@ return(
         {(categoryMap[category].movies.length > 0) ? categoryMap[category].movies.map((movie, i)=>{
           return(
             <Grid item xs={12} sm={4} md={3}>
-              <MovieCard key={i} titel={movie.title} 
-                    img={movie.poster_path} 
-                    src={movie.id}
-                    info={null} 
-                    vote={movie.vote_average}
+              <MovieCard
+                  key={i} 
+                  title={movie.title} 
+                  imgUrl={movie.posterImageUrl} 
+                  id={movie.id}
+                  info={movie.releaseYear}
+                  vote={movie.voteAverage}
               />
             </Grid>
           )
