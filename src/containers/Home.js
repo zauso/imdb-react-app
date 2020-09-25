@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { connect } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom';
 import { fetchPopularMovies } from '../store/actions/popularMovie';
@@ -15,6 +15,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Helmet from 'react-helmet';
 import CenterProgress from '../components/CenterProgress'
 import Errors from './Errors'
+import MoviesList from '../components/MoviesList'
+import LazyLoad from 'react-lazyload'
+import MovieCardSkeleton from '../components/skeletons/MovieCardSkeleton'
+
+//const MovieCard = React.lazy(() => import('../components/MovieCard'));
 
 const CustomTabs = withStyles({
     root: {
@@ -91,48 +96,24 @@ function Home(props){
   }, [category])
 
 return(
-<React.Fragment>
-<Helmet>
-  <title>Imdb react app</title>  
-</Helmet>
-<Container>
+  <Container>
+    <Helmet>
+     <title>Imdb react app</title>  
+    </Helmet>
     <CustomTabs 
-        value={category}
-        onChange={(e, newValue) => switchTab(newValue)}
+    value={category}
+    onChange={(e, newValue) => switchTab(newValue)}
     >
-        <CustomTab component={Link} to="/" label="Popular" value={categories.POPULAR}/>
-        <CustomTab component={Link} to="/top-rated" label="Top rated" value={categories.TOP_RATED}/>
-        <CustomTab component={Link} to="/upcoming" label="Upcoming" value={categories.UPCOMING}/>
+      <CustomTab component={Link} to="/" label="Popular" value={categories.POPULAR}/>
+      <CustomTab component={Link} to="/top-rated" label="Top rated" value={categories.TOP_RATED}/>
+      <CustomTab component={Link} to="/upcoming" label="Upcoming" value={categories.UPCOMING}/>
     </CustomTabs>
-    <Grid container justify="flex-start" wrap={"wrap"} spacing={4}>
-        {(categoryMap[category].movies.length > 0) ? categoryMap[category].movies.map((movie, i)=>{
-          return(
-            <Grid item xs={12} sm={4} md={3}>
-              <MovieCard
-                  key={i} 
-                  title={movie.title} 
-                  imgUrl={movie.posterImageUrl} 
-                  id={movie.id}
-                  info={movie.releaseYear}
-                  vote={movie.voteAverage}
-              />
-            </Grid>
-          )
-        })
-        : null 
-      }
-    </Grid>
-
-  <CenterProgress/>
-  <Errors/>
-
-
-</Container>
-</React.Fragment>
+    {categoryMap[category].movies.length && <MoviesList movies={categoryMap[category].movies}/>}
+    <CenterProgress/>
+    <Errors/>
+  </Container>
   );
 }
-
-
 
 const mapStateToProps = (state) => {
   return {

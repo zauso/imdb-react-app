@@ -9,6 +9,7 @@ import Rating from "@material-ui/lab/Rating"
 import * as api from '../utils/imdb-api.js';
 import {makeStyles} from "@material-ui/core/styles"
 import MovieCard from '../components/MovieCard'
+import MoviePageSkeleton from '../components/skeletons/MoviePageSkeleton' 
 
 import { prepareMovie, prepareMovies, deleteEmptyMovies, windowScrollTop } from '../utils'
 import { addVisitedMovie } from '../store/actions/user'
@@ -84,10 +85,14 @@ function Movie(props){
     const [recommendMovies, setRecommendMovies] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
 
+    const [loaded, setLoaded] = useState(false)
 	useEffect(()=>{
+       setLoaded(false) 
 	   api.get(`/movie/${urlId}`).then((result) => {
 			setMovie(prepareMovie(result.data));
-		})
+		}).then(()=>{
+            setLoaded(true) 
+        })
        api.get(`/movie/${urlId}/similar`).then((result) => {
             setSimilarMovies(prepareMovies(result.data.results.slice(0, 6)))
         })
@@ -110,7 +115,9 @@ function Movie(props){
 	      <div className={classes.backdrop}>
 	      		<img className={classes.backdropImage} src={movie.backdropImageUrl} alt={movie.title}/>
 	      </div>
+
 	      <Container className={classes.movieContainer}>
+          {loaded ?
 	      		<Grid container spacing={4}>
 	      			<Grid item md={3} >
 	      				<img className={classes.movieImage} src={movie.posterImageUrl} alt={movie.title}/>
@@ -147,6 +154,9 @@ function Movie(props){
                         </React.Fragment>}
 	      			</Grid>
 	      		</Grid>
+            :
+                <MoviePageSkeleton/>
+            }
 	      </Container>
 	      </div>
 

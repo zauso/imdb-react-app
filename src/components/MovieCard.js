@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import {Link} from "react-router-dom"
-
+import MovieCardSkeleton from './skeletons/MovieCardSkeleton'
 import getScoreColor from '../utils/scoreColor'
 
 const useStyles = makeStyles(theme => ({
@@ -65,22 +65,23 @@ const useStyles = makeStyles(theme => ({
 
 
 function MovieCard(props){
-
 	const classes = useStyles();
 	const { id, title, imgUrl, info, vote } = props;
 	const scoreColor = getScoreColor(vote);
 
 	return(
-		<Link className={classes.root} to={`/movie/${id}`}>
-			<div className={classes.posterBox}>
-				<img className={classes.movieImage} src={imgUrl} alt={title}/>
-			</div>
-			<div className={classes.movieDetails}>
-				<h4 className={classes.title}>{title}</h4>
-				<p className={classes.info}>{info}</p>
-				<span className={classes.vote} style={{background: scoreColor}}>{vote}</span>
-			</div>
-		</Link>
+		<React.Fragment>
+			<Link className={classes.root} to={`/movie/${id}`}>
+				<div className={classes.posterBox}>
+					<img className={classes.movieImage} src={imgUrl} alt={title}/>
+				</div>
+				<div className={classes.movieDetails}>
+					<h4 className={classes.title}>{title}</h4>
+					<p className={classes.info}>{info}</p>
+					<span className={classes.vote} style={{background: scoreColor}}>{vote}</span>
+				</div>
+			</Link>
+		</React.Fragment>
 	)
 
 }
