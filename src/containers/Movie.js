@@ -10,7 +10,7 @@ import * as api from '../utils/imdb-api.js';
 import {makeStyles} from "@material-ui/core/styles"
 import MovieCard from '../components/MovieCard'
 import MoviePageSkeleton from '../components/skeletons/MoviePageSkeleton' 
-
+import EmptyBlock from '../components/skeletons/EmptyBlock'
 import { prepareMovie, prepareMovies, deleteEmptyMovies, windowScrollTop } from '../utils'
 import { addVisitedMovie } from '../store/actions/user'
 
@@ -164,35 +164,41 @@ function Movie(props){
             <h2>Recommended movies</h2>
                 <Grid container spacing={2}>
                     {
-                        recommendMovies.map((movie, i)=>{
-                            return (<Grid item md={2}>
-                                        <MovieCard 
-                                            key={i} 
-                                            title={movie.title} 
-                                            imgUrl={movie.posterImageUrl} 
-                                            id={movie.id}
-                                            vote={movie.voteAverage}
-                                        />
-                                    </Grid>
-                            )
-                        })
+                        recommendMovies.length ? 
+                            recommendMovies.map((movie, i)=>{
+                                return (<Grid item md={2}>
+                                            <MovieCard 
+                                                key={i} 
+                                                title={movie.title} 
+                                                imgUrl={movie.posterImageUrl} 
+                                                id={movie.id}
+                                                vote={movie.voteAverage}
+                                            />
+                                        </Grid>
+                                )
+                            })
+                        :
+                            <EmptyBlock text={'There is no data for this movie'}/>
                     }
                 </Grid>
             <h2>Similar movies</h2>
                 <Grid container spacing={2}>
                     {
-                        similarMovies.map((movie, i)=>{
-                            return (<Grid item md={2}>
-                                        <MovieCard
-                                            key={i} 
-                                            title={movie.title} 
-                                            imgUrl={movie.posterImageUrl} 
-                                            id={movie.id}
-                                            vote={movie.voteAverage}
-                                        />
-                                    </Grid>
-                            )
-                        })
+                        similarMovies ? 
+                            similarMovies.map((movie, i)=>{
+                                return (<Grid item md={2}>
+                                            <MovieCard
+                                                key={i} 
+                                                title={movie.title} 
+                                                imgUrl={movie.posterImageUrl} 
+                                                id={movie.id}
+                                                vote={movie.voteAverage}
+                                            />
+                                        </Grid>
+                                )
+                            })
+                        :
+                            <EmptyBlock text={'There is no data for this movie'}/>
                     }
                 </Grid>
           </Container>
