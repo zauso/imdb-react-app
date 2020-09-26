@@ -21,7 +21,14 @@ export const prepareMovie = (movie) => {
         releaseYear: new Date(movie.release_date).getFullYear(),
         posterImageUrl: prepareImage(movie.poster_path),
         backdropImageUrl: prepareImage(movie.backdrop_path),
-        popularity: movie.popularity
+        popularity: movie.popularity,
+        actors: ((movie.credits || []).cast || []).map((actor)=>{
+            return {
+                id: actor.id,
+                name: actor.name,
+                photo: prepareImage(actor.profile_path)
+            }
+        })
     }
 } 
 

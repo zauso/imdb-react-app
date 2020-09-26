@@ -11,6 +11,7 @@ import {makeStyles} from "@material-ui/core/styles"
 import MovieCard from '../components/MovieCard'
 import MoviePageSkeleton from '../components/skeletons/MoviePageSkeleton' 
 import EmptyBlock from '../components/skeletons/EmptyBlock'
+import ActorPreview from '../components/ActorPreview'
 import { prepareMovie, prepareMovies, deleteEmptyMovies, windowScrollTop } from '../utils'
 import { addVisitedMovie } from '../store/actions/user'
 
@@ -104,8 +105,8 @@ function Movie(props){
         addVisitedMovie(urlId)
 
 	},[urlId]);
-
 	return (
+
 	(typeof movie.titel !== undefined) ?
 		<>
 	      <Helmet>
@@ -151,6 +152,16 @@ function Movie(props){
                         {movie.overview && <React.Fragment>
                             <h3 className={classes.subtitle}>Overview</h3>
                             <Typography variant={"body1"}>{movie.overview}</Typography>
+                        </React.Fragment>}
+                        {movie.actors.length && <React.Fragment>
+                            <h3 className={classes.subtitle}>Actors</h3>
+                            <Typography variant={"body1"}>
+                            {
+                                movie.actors.map((actor)=>{
+                                    return <ActorPreview {...actor}/>
+                                })
+                            }
+                            </Typography>
                         </React.Fragment>}
 	      			</Grid>
 	      		</Grid>

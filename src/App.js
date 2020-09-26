@@ -6,6 +6,7 @@ import './App.css';
 import Home from './containers/Home';
 import Movie from './containers/Movie';
 import Visited from './containers/Visited'
+import Actor from './containers/Actor'
 import Navbar from "./components/Navbar"
 
 import { fetchGenres } from './store/actions/genres'
@@ -27,6 +28,7 @@ function App(props) {
         <Route exact path='/top-rated' component={Home}/>
         <Route exact path='/upcoming' component={Home}/>
         <Route path='/movie/:id' component={Movie}/>
+        <Route path='/actor/:id' component={Actor}/>
         <Route path='/visited' component={Visited}/>
       </Switch> 
     </>
