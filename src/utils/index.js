@@ -16,7 +16,7 @@ export const prepareMovie = (movie) => {
         genreIds: movie.genre_ids,
         voteAverage: movie.vote_average,
         legend: movie.tagline,
-        duration: movie.duration,
+        duration: movie.runtime,
         budget: movie.budget,
         releaseYear: new Date(movie.release_date).getFullYear(),
         posterImageUrl: prepareImage(movie.poster_path),

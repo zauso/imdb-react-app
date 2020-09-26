@@ -88,7 +88,7 @@ function Movie(props){
     const [loaded, setLoaded] = useState(false)
 	useEffect(()=>{
        setLoaded(false) 
-	   api.get(`/movie/${urlId}`).then((result) => {
+	   api.get(`/movie/${urlId}`, {append_to_response: 'credits'}).then((result) => {
 			setMovie(prepareMovie(result.data));
 		}).then(()=>{
             setLoaded(true) 
@@ -184,7 +184,7 @@ function Movie(props){
             <h2>Similar movies</h2>
                 <Grid container spacing={2}>
                     {
-                        similarMovies ? 
+                        similarMovies.length ? 
                             similarMovies.map((movie, i)=>{
                                 return (<Grid item md={2}>
                                             <MovieCard
