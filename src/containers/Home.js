@@ -47,7 +47,7 @@ const CustomTab = withStyles({
 function Home(props){
 
   const location = window.location.pathname.slice("/").slice(1) || "popular";
-	const { movies, fetchPopularMovies, popularMovies, fetchUpcomingMovies, upcomingMovies, fetchTopratedMovies, topratedMovies, deleteError, errors } = props;
+	const { movies, genres, fetchPopularMovies, popularMovies, fetchUpcomingMovies, upcomingMovies, fetchTopratedMovies, topratedMovies, deleteError, errors } = props;
   const [category, setCategory] = useState(location)
 
   const categories = {
@@ -108,7 +108,7 @@ return(
       <CustomTab component={Link} to="/top-rated" label="Top rated" value={categories.TOP_RATED}/>
       <CustomTab component={Link} to="/upcoming" label="Upcoming" value={categories.UPCOMING}/>
     </CustomTabs>
-    {categoryMap[category].movies.length && <MoviesList movies={categoryMap[category].movies}/>}
+    {(categoryMap[category].movies.length && genres.loaded) && <MoviesList movies={categoryMap[category].movies} genres={genres.genres}/>}
     <CenterProgress/>
     <Errors/>
   </Container>
@@ -119,7 +119,8 @@ const mapStateToProps = (state) => {
   return {
     popularMovies: state.popularMovies.movies,
     upcomingMovies: state.upcomingMovies.movies,
-    topratedMovies: state.topratedMovies.movies
+    topratedMovies: state.topratedMovies.movies,
+    genres: state.genres
   }
 }
 const mapDispatchToProps = dispatch => ({

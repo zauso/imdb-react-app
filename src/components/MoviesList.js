@@ -6,12 +6,13 @@ import MovieCardSkeleton from './skeletons/MovieCardSkeleton'
 
 export default function MoviesList(props){
 
-	const { movies } = props
+	const { movies, genres = null } = props
 
 	return (
 	    <Grid container justify="flex-start" wrap={"wrap"} spacing={4}>
 	    	{
 	    		movies.map((movie, i)=>{
+	    			let movieGenres = movie.genreIds.map(genreId=>genres[genreId]).join(', ')
 					return(
 						<Grid item xs={12} sm={4} md={3}>
 							<LazyLoad once key={i} height={300} placeholder={<MovieCardSkeleton/>}>
@@ -20,7 +21,7 @@ export default function MoviesList(props){
 								title={movie.title} 
 								imgUrl={movie.posterImageUrl} 
 								id={movie.id}
-								info={movie.releaseYear}
+								info={`${movie.releaseYear} - ${movieGenres}`}
 								vote={movie.voteAverage}
 								/>
 							</LazyLoad>

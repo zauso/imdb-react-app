@@ -13,6 +13,7 @@ export const prepareMovie = (movie) => {
         title: movie.title,
         overview: movie.overview,
         genres: movie.genres ? movie.genres.map(i => i.name) : null,
+        genreIds: movie.genre_ids,
         voteAverage: movie.vote_average,
         legend: movie.tagline,
         duration: movie.duration,

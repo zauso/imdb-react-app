@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 import './App.css';
 
 import Home from './containers/Home';
 import Movie from './containers/Movie';
 import Visited from './containers/Visited'
-
 import Navbar from "./components/Navbar"
+
+import { fetchGenres } from './store/actions/genres'
 
 function App(props) {
 
+  const { fetchGenres } = props
+
+  useEffect(()=>{
+    fetchGenres()
+  },[])
+  
   return (
     <>
       <Navbar/> 
@@ -25,5 +33,13 @@ function App(props) {
   )
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+const mapDispatchToProps = dispatch => ({
+  fetchGenres: () => dispatch(fetchGenres()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
