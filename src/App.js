@@ -8,6 +8,7 @@ import Movie from './containers/Movie';
 import Visited from './containers/Visited'
 import Actor from './containers/Actor'
 import Navbar from "./components/Navbar"
+import NotFound from "./components/NotFound"
 
 import { fetchGenres } from './store/actions/genres'
 
@@ -30,6 +31,7 @@ function App(props) {
         <Route path='/movie/:id' component={Movie}/>
         <Route path='/actor/:id' component={Actor}/>
         <Route path='/visited' component={Visited}/>
+        <Route component={NotFound}/>
       </Switch> 
     </>
   )

@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
 export default function ActorPreview(props){
 	const classes = useStyles();
 	const { id, name, photo } = props
-	console.log(props)
 	return (
 		<Link to={`/actor/${id}`} style={{textDecoration: 'none', color: '#fff'}}>
 			<Typography variant={"span"} className={classes.name}>
