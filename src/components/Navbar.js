@@ -15,6 +15,7 @@ import debounce from 'lodash/debounce'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import * as api from '../utils/imdb-api.js'
 
+import CloseIcon from '@material-ui/icons/Close';
 import List from '@material-ui/core/List'
 import Button from '@material-ui/core/Button'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -27,6 +28,7 @@ import SearchResults from "./SearchList"
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
+    display: "flex",
     borderRadius: '4px',
     backgroundColor: '#fff',
     '&:hover': {
@@ -36,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
-    width: '100%'
+    width: '90%'
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 1),
-    width: '100%',
+    width: '90%',
   },
   overlay: {
     position: 'fixed',
@@ -56,6 +58,12 @@ colorPrimary: {
   },
   barColorPrimary: {
     backgroundColor: '#ffc5b2',
+  },
+  closeInp:{
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
+    color: "#9e9e9e"
   }
 }));
 
@@ -85,6 +93,7 @@ const NavButton = withStyles(theme => ({
 function Navbar(props){
 
 const [showOutput, setShowOutput] = useState(false)
+const [searchRequest, setSearchRequest] = useState("")
 const { searchMovies, foundMovies } = props;
 const searchDebounce = debounce(function (value) {
 	let parameters = {
@@ -93,8 +102,14 @@ const searchDebounce = debounce(function (value) {
 	searchMovies(parameters)
 }, 300)
 
+function clearInput(){
+  setSearchRequest("")
+  setShowOutput(false)
+}
+
 function handleSearchInput(e){
 	let value = e.target.value;
+  setSearchRequest(value)
 	if(value.length < 2) return false;
 	setShowOutput(true)
 	searchDebounce(value)
@@ -121,13 +136,14 @@ const classes = useStyles();
 		            <InputBase
 		              placeholder="Search…"
 		              onChange={handleSearchInput}
+                  value={searchRequest}
 		              classes={{
 		                root: classes.inputRoot,
 		                input: classes.inputInput,
 		              }}
 		              inputProps={{ 'aria-label': 'search' }}
 		            />
-		       	
+                {searchRequest && <div className={classes.closeInp} onClick={clearInput}><CloseIcon/></div>}
 		          </div>
              	</div>
              	<div>
