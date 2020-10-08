@@ -28,7 +28,7 @@ export const prepareMovie = (movie) => {
                 name: actor.name,
                 photo: prepareImage(actor.profile_path)
             }
-        })
+        }).slice(0, 15)
     }
 } 
 

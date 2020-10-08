@@ -90,11 +90,10 @@ const NavButton = withStyles(theme => ({
     }
 }))(Button)
 
-function Navbar(props){
+function Navbar({ searchMovies, foundMovies }){
 
 const [showOutput, setShowOutput] = useState(false)
 const [searchRequest, setSearchRequest] = useState("")
-const { searchMovies, foundMovies } = props;
 const searchDebounce = debounce(function (value) {
 	let parameters = {
 		query: value
