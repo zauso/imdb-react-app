@@ -62,6 +62,14 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
+function LoadImg(props){
+	const { src, className, alt } = props;
+	const [loading, setLoading] = useState(false)
+	const imgOnload = () => {
+		console.log("img loading")
+	}
+	return <img onLoad={imgOnload()} className={className} src={src} alt={alt}/>
+}
 
 
 function MovieCard(props){
@@ -73,7 +81,8 @@ function MovieCard(props){
 		<React.Fragment>
 			<Link className={classes.root} to={`/movie/${id}`}>
 				<div className={classes.posterBox}>
-					<img className={classes.movieImage} src={imgUrl} alt={title}/>
+					{/*<img className={classes.movieImage} src={imgUrl} alt={title}/>*/}
+					<LoadImg className={classes.movieImage} src={imgUrl} alt={title}/>
 				</div>
 				<div className={classes.movieDetails}>
 					<h4 className={classes.title}>{title}</h4>
