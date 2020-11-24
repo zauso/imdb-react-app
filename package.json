@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.2.0"
+    "prettier": "^2.2.0",
+    "prop-types": "^15.7.2"
   }
 }

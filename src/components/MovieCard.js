@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types';
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import {Link} from "react-router-dom"
@@ -40,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 		color: '#000',
 		textDecoration: 'none',
 		margin: '4px 0 0 0'
-		//text
 	},
 	info: {
 		fontSize: '16px',
@@ -65,23 +65,18 @@ const useStyles = makeStyles(theme => ({
 function LoadImg(props){
 	const { src, className, alt } = props;
 	const [loading, setLoading] = useState(false)
-	const imgOnload = () => {
-		console.log("img loading")
-	}
 	return <img onLoad={imgOnload()} className={className} src={src} alt={alt}/>
 }
 
 
-function MovieCard(props){
+function MovieCard({ id, title, imgUrl, info, vote }){
 	const classes = useStyles();
-	const { id, title, imgUrl, info, vote } = props;
 	const scoreColor = getScoreColor(vote);
 
 	return(
 		<React.Fragment>
 			<Link className={classes.root} to={`/movie/${id}`}>
 				<div className={classes.posterBox}>
-					{/*<img className={classes.movieImage} src={imgUrl} alt={title}/>*/}
 					<LoadImg className={classes.movieImage} src={imgUrl} alt={title}/>
 				</div>
 				<div className={classes.movieDetails}>
@@ -94,6 +89,14 @@ function MovieCard(props){
 	)
 
 }
+
+MovieCard.propTypes = {
+	id:PropTypes.number,
+	title:PropTypes.string,
+	imgUrl:PropTypes.string,
+	info:PropTypes.string,
+	vote:PropTypes.number,
+};
 
 
 export default MovieCard
